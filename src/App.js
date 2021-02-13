@@ -12,22 +12,20 @@ const stylings = ["bold", "italic", "underline"];
 const colors = ["yellow", "blue", "red", "black", "purple"];
 
 function App() {
-  const [style, setStyle] = useState(" ");
+  const [style1, setStyle1] = useState(null);
+  const [style2, setStyle2] = useState(null);
+  const [style3, setStyle3] = useState(null);
   const [color, setColor] = useState(" ");
-  const styles = (font) => {
-    //setStyle(font);
-    let s1 = 0;
-    if (font === "bold" && s1 === 0) {
-      setStyle("bold");
-      s1 = 1;
+  const stylez = (font) => {
+    //setStyle({ ...style, ...styles[font] });
+    if (font === "bold") {
+      setStyle1(style1 ? null : styles.bold);
+      //s1 = 1;
     } else if (font === "italic") {
-      setStyle("italic");
+      setStyle2(style2 ? null : styles.italic);
       //s1 = 0;
-    } else if (font === "underline") {
-      setStyle("underline");
-    } else if (s1 === 1 && font !== "bold") {
-      setStyle(" ");
-      s1 = 0;
+    } else {
+      setStyle3(style3 ? null : styles.underline);
     }
   };
   const colores = (lon) => {
@@ -35,8 +33,8 @@ function App() {
   };
   const stylingBoxes = stylings.map((style) => (
     <button
-      onClick={() => styles(style)}
-      className="btn btn-light"
+      onClick={() => stylez(style)}
+      className={`btn btn-light`}
       style={styles[style]}
       key={style}
     >
@@ -58,9 +56,13 @@ function App() {
       <textarea
         style={{
           color: color,
-          fontStyle: style,
-          fontWeight: style,
-          textDecorationLine: style,
+          //...style,
+          ...style1,
+          ...style2,
+          ...style3,
+          //fontStyle: style,
+          //fontWeight: style,
+          //textDecorationLine: style,
         }}
       />
       <div className="my-3">{colorBoxes}</div>
